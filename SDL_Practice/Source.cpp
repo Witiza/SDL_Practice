@@ -3,6 +3,7 @@
 #include<iostream>
 #include "SDL\include\SDL.h"
 
+
 #pragma comment( lib, "SDL/libx86/SDL2.lib")
 #pragma comment( lib, "SDL/libx86/SDL2main.lib")
 
@@ -15,26 +16,20 @@ int main(int argc, char* argv[])
 	SDL_Window *window;
 	SDL_Renderer *renderer;
 
-	SDL_CreateWindowAndRenderer(640, 320, SDL_WINDOW_RESIZABLE, &window, &renderer);
-	SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+	//SDL_CreateWindowAndRenderer(640, 320, SDL_WINDOW_RESIZABLE, &window, &renderer);
+	window = SDL_CreateWindow("Test", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 600, 398, 0);
+	renderer = SDL_CreateRenderer(window, -1, 0);
+	SDL_Surface* sprite = SDL_LoadBMP("images/surf.bmp");
+	SDL_Surface* background = SDL_LoadBMP("images/dank.bmp");
+	SDL_Texture* penis = SDL_CreateTextureFromSurface(renderer, sprite);
+	SDL_Texture* sea = SDL_CreateTextureFromSurface(renderer, background);
 
-	SDL_RenderClear(renderer);
 
-	SDL_RenderPresent(renderer);
+	
 
-	SDL_RenderClear(renderer);
 
-	SDL_Rect r;
-	r.x = 66;
-	r.y = 66;
-	r.w = 66;
-	r.h = 66;
 
-	SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255);
-
-	SDL_RenderFillRect(renderer, &r);
-
-	SDL_RenderPresent(renderer);
+	
 	int x = 0;
 	int y = 0;
 	bool flag = 0;
@@ -54,27 +49,42 @@ int main(int argc, char* argv[])
 				}
 				if (event.key.keysym.scancode == SDL_SCANCODE_LEFT)
 				{
-					x -= 10;
+					x -= 20;
+					break;
+				}
+				if (event.key.keysym.scancode == SDL_SCANCODE_RIGHT)
+				{
+					x += 20;
+					break;
+				}
+				if (event.key.keysym.scancode == SDL_SCANCODE_DOWN)
+				{
+					y += 20;
+					break;
+				}
+				if (event.key.keysym.scancode == SDL_SCANCODE_UP)
+				{
+					y -= 20;
+					break;
+				}
+				if (event.key.keysym.scancode == SDL_SCANCODE_I)
+				{
+					y -= 20;
 					break;
 				}
 			}
 			SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
-
 			SDL_RenderClear(renderer);
 
-			SDL_RenderPresent(renderer);
+			SDL_Rect spriteRect;
+			spriteRect.x = x;
+			spriteRect.y = y;
+			spriteRect.h = 100;
+			spriteRect.w = 100;
 
-
-
-			r.x = x;
-			r.y = y;
-			r.w = 66;
-			r.h = 66;
-
-			SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255);
-
-			SDL_RenderFillRect(renderer, &r);
-
+			SDL_RenderClear(renderer);
+			SDL_RenderCopy(renderer, sea, NULL, NULL);
+			SDL_RenderCopy(renderer, penis, NULL, &spriteRect);
 			SDL_RenderPresent(renderer);
 		}
 		
