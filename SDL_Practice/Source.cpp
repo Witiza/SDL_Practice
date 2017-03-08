@@ -9,6 +9,9 @@
 #define MAX_SHOTS  100
 #define WINDOW_HEIGHT 320
 #define WINDOW_LENGHT 224
+#define CHARACTER_SPEED 5
+#define BULLET_SPEED 5
+#define BACKGROUND_SPEED 10
 
 int main(int argc, char* argv[])
 {
@@ -39,7 +42,7 @@ int main(int argc, char* argv[])
 
 	SDL_Rect background2;
 	background2.x = 0;
-	background2.y = WINDOW_HEIGHT;
+	background2.y = -WINDOW_HEIGHT;
 	background2.h = WINDOW_HEIGHT;
 	background2.w = WINDOW_LENGHT;
 
@@ -124,21 +127,21 @@ int main(int argc, char* argv[])
 
 			if (up == true)
 			{
-				y -= 20;
+				y -= CHARACTER_SPEED;
 			}
 			 if (down == true)
 			{
-				y += 20;
+				y += CHARACTER_SPEED;
 			}
 		 if (right == true)
 			{
-				x += 20;
+				x += CHARACTER_SPEED;
 			
 
 			}
 		if (left == true)
 			{
-				x -= 20;
+				x -= CHARACTER_SPEED;
 		
 			}
 			
@@ -146,20 +149,20 @@ int main(int argc, char* argv[])
 
 		for (int i = 0; i < MAX_SHOTS; i++)
 		{
-			laserrect[i].y -= 20;
+			laserrect[i].y -= BULLET_SPEED;
 		}
 	
-		background1.y -= 10;
-		background2.y -= 10;
+		background1.y += BACKGROUND_SPEED;
+		background2.y += BACKGROUND_SPEED;
 
-		if (background1.y <= -WINDOW_HEIGHT)
+		if (background1.y >= WINDOW_HEIGHT)
 		{
-			background1.y = WINDOW_HEIGHT;
+			background1.y = -WINDOW_HEIGHT;
 		}
 
-		if (background2.y <= -WINDOW_HEIGHT)
+		if (background2.y >= WINDOW_HEIGHT)
 		{
-			background2.y = WINDOW_HEIGHT;
+			background2.y = -WINDOW_HEIGHT;
 		}
 
 		
